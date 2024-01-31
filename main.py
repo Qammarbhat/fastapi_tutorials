@@ -4,6 +4,7 @@ from typing import Optional
 
 app = FastAPI()
 
+# Root endpoint, returns a simple message.
 @app.get('/')
 def index():
     """
@@ -11,6 +12,7 @@ def index():
     """
     return {"message": "Hello World"}
 
+# Retrieve all blogs endpoint with optional pagination parameters.
 @app.get("/blog/all",
          tags=["blog"],
          summary="Retrieve all blogs",
@@ -25,6 +27,7 @@ def get_all_blogs(page: int = 1, page_size: Optional[int] = None):
     """
     return {"message": f"All {page_size} blogs on page {page}"}
 
+# Retrieve a comment of a blog by providing blog ID and comment ID.
 @app.get("/blog/{id}/comments/{comment_id}",
         tags=["blog", "comment"],
         summary="Retrieve a comment of a blog",
@@ -39,6 +42,7 @@ def get_comment(id: int, comment_id: int, valid: bool = True, username: Optional
     """
     return {"message": f"Blog_id: {id}, Comment_ID: {comment_id}, valid: {valid}, username: {username}"}
 
+# Retrieve blogs of a specific type using a custom enum class.
 @app.get("/blog/type/{type}",
          tags=["blog"],
          summary="Retrieve blogs of a specific type",
@@ -50,6 +54,7 @@ def get_blog_type(type: BlogType):
     """
     return {"message": f"Blog type is: {type}"}
 
+# Retrieve a blog by ID, handling different HTTP status codes.
 @app.get('/blog/{id}',
          status_code=status.HTTP_200_OK,
          tags=["blog"],
@@ -61,7 +66,7 @@ def get_blog(id: int, response: Response):
     - **id**: mandatory path parameter representing the blog ID.
     - **response**: FastAPI Response object to handle status code.
     """
-    if id > 5: 
+    if id > 5:
         response.status_code = status.HTTP_404_NOT_FOUND
         return {"error": f"Blog {id} not found"}
     else:
