@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastAPI HTML Form</title>
+</head>
+<body>
+
+    <h1>Create Comment</h1>
+
+    <form id="commentForm">
+        <label for="id">Blog ID:</label>
+        <input type="number" id="id" name="id" required>
+        <br>
+
+        <label for="commentId">Comment ID:</label>
+        <input type="number" id="commentId" name="commentId" required>
+        <br>
+
+        <label for="patientId">Patient ID:</label>
+        <input type="number" id="patientId" name="patientId" required>
+        <br>
+
+        <label for="content">Content:</label>
+        <input type="text" id="content" name="content" required>
+        <br>
+
+        <button type="button" onclick="submitForm()">Submit</button>
+    </form>
+
+    <h2>Results:</h2>
+    <pre id="result"></pre>
+
+    <script>
+        function submitForm() {
+            // Get form values
+            var id = document.getElementById('id').value;
+            var commentId = document.getElementById('commentId').value;
+            var patientId = document.getElementById('patientId').value;
+            var content = document.getElementById('content').value;
+
+            // Create JSON payload
+            var payload = {
+                "blog": {
+                    "title": "string",
+                    "content": "string",
+                    "published": true,
+                    "nb_comments": 0,
+                    "head": "string"
+                },
+                "content": content
+            };
+
+            // Send POST request to FastAPI route
+            fetch(`http://127.0.0.1:8000/blog/new/${id}/comment?comment_id=${commentId}&patient_id=${patientId}`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display results on the page
+                document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+
+</body>
+</html>

@@ -61,6 +61,7 @@ def get_blog(id: int, response: Response):
     - **id**: mandatory path parameter representing the blog ID.
     - **response**: FastAPI Response object to handle status code.
     """
+    
     if id > 5:
         response.status_code = status.HTTP_404_NOT_FOUND
         return {"error": f"Blog {id} not found"}
