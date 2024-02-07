@@ -10,6 +10,7 @@
 @router.post("/new")
 def create_blog(blog: BlogModel):
     return {"data": blog}
+```
 
 
 ### Path and Query Parameters
@@ -47,7 +48,7 @@ async def create_comment(blog: BlogModel, id: int,
         "version": v,
         "comment_id": comment_id
     }
-
+```
 ### Parameter Metadata
 
 #### What?
@@ -62,7 +63,7 @@ comment_title: str = Query(None,
                             description="The description of the comment title", alias="commentTitle", 
                             deprecated= True),
 
-
+```
 ### Validators
 
 #### What?
@@ -76,6 +77,7 @@ content: str= Body(...,
                    min_length=10,
                    max_length=100,
                    regex="^[a-z\s]*$"),
+```
 ### Multiple Values
 
 #### What?
@@ -86,7 +88,7 @@ content: str= Body(...,
 #### Example:
 ```python
 v: Optional[List[str]]= Query(["hello1", "hello2", "hello3"]),
-
+```
 ### Number Validators
 
 #### What?
@@ -97,7 +99,7 @@ v: Optional[List[str]]= Query(["hello1", "hello2", "hello3"]),
 #### Example:
 ```python
 comment_id: int =Path(gt=5, le=10)
-
+```
 ### Complex Subtypes
 
 #### What?
