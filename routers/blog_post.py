@@ -5,11 +5,11 @@ from helpers import BlogModel
 
 router = APIRouter(
     prefix="/blog",
-    tags=["bog"]
+    tags=["blog"]
 )
 
 @router.post("/new")
-def create_blog(blog: BlogModel):
+async def create_blog(blog: BlogModel):
     return {"data": blog} 
 
 @router.post("/new/{id}")
@@ -42,3 +42,4 @@ async def create_comment(blog: BlogModel, id: int,
         "version": v,
         "comment_id": comment_id
     }
+

@@ -3,6 +3,9 @@ from typing import Optional, List, Dict
 from pydantic import BaseModel
 
 
+def required_functionality():
+    return {"message": "learning fastapi is nice"}
+
 class Image(BaseModel):
     url: str
     alias: str

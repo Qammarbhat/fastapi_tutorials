@@ -1,6 +1,7 @@
-from fastapi import APIRouter, status, Response
-from helpers import BlogType
+from fastapi import APIRouter, status, Response, Depends
+from helpers import BlogType, required_functionality
 from typing import Optional
+
 
 
 router = APIRouter(
@@ -16,13 +17,13 @@ router = APIRouter(
          description='This API endpoint simulates fetching all blogs.',
          response_description="The list of available blogs"
          )
-def get_all_blogs(page: int = 1, page_size: Optional[int] = None):
+def get_all_blogs(page: int = 1, page_size: Optional[int] = None, req_parameter: dict = Depends(required_functionality)):
     """
     Retrieve all blogs with optional pagination parameters.
     - **page**: mandatory query parameter, default is 1.
     - **page_size**: optional query parameter, represents the number of blogs per page.
     """
-    return {"message": f"All {page_size} blogs on page {page}"}
+    return {"message": f"All {page_size} blogs on page {page}", "req": req_parameter}
 
 # Retrieve a comment of a blog by providing blog ID and comment ID.
 @router.get("/{id}/comments/{comment_id}",
